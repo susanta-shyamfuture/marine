@@ -171,12 +171,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   //   }
   // }
 
-  ngOnDestroy() {
+  ionViewDidLeave() {
     // UnSubscribe Subscriptions
     this.onDestroyUnSubscribe.next();
     this.onDestroyUnSubscribe.complete();
     this.backSubscription.unsubscribe();
   }
+  ngOnDestroy() { }
 
   initializeApp() {
     this.platform.ready().then(() => {

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../../core/services';
+import { AuthService, ToastService } from '../../../core/services';
 // RxJs
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -13,19 +13,21 @@ export class DashboardPage implements OnInit, OnDestroy {
   private onDestroyUnSubscribe = new Subject<void>();
   public datas: any;
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    public toast: ToastService,
   ) { }
 
   ngOnInit() {
   }
-  ngOnDestroy() {
+  ionViewWillEnter() {
+    this.getAllData();
+  }
+  ionViewDidLeave() {
     // UnSubscribe Subscriptions
     this.onDestroyUnSubscribe.next();
     this.onDestroyUnSubscribe.complete();
   }
-  ionViewWillEnter() {
-    this.getAllData();
-  }
+  ngOnDestroy() { }
   getAllData() {
     this.authService.getData()
     .pipe(takeUntil(this.onDestroyUnSubscribe))
@@ -39,5 +41,4 @@ export class DashboardPage implements OnInit, OnDestroy {
       }
     );
   }
-
 }
