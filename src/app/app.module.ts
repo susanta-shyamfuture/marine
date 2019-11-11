@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { httpInterceptorProviders } from './core/interceptors';
 
 import { CoreModule } from './core/modules/core.module';
+import { Network } from '@ionic-native/network/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -29,7 +30,8 @@ import { CoreModule } from './core/modules/core.module';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    Network
   ],
   bootstrap: [AppComponent]
 })

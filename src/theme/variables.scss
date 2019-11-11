@@ -1,6 +1,10 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
+/** Custom SCSS Variables */
+$fontweights: 100, 300, 400, 500, 600, 700, 800, 900;
+$allfontsize: 10, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 38, 40;
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/

@@ -1,5 +1,8 @@
 <ion-app [class.dark-theme]="dark">
   <!-- <ion-split-pane content-id="main" when="false"></ion-split-pane> -->
+  <!-- <ion-backdrop #offlineLoadingBackdrop stopPropagation="false"></ion-backdrop> -->
+  <!-- <app-backdrop></app-backdrop> -->
+  
   <ion-menu content-id="main">
     <ion-header>
       <ion-toolbar>
@@ -108,11 +111,12 @@
       </ion-list>
     </ion-content>
   </ion-menu>
+  
   <ion-content main id="main">
     <ion-router-outlet></ion-router-outlet>
   </ion-content>
-  <!-- <ion-footer>
-    Offline
-  </ion-footer> -->
+  <ion-footer>
+    <app-check-network></app-check-network>
+  </ion-footer>
 
 </ion-app>

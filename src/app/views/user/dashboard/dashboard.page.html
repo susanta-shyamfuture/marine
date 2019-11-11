@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<ion-content class="ion-padding" *ngIf="datas">
+<ion-content class="ion-padding">
   <!-- <ion-card *ngFor="let item of datas">
     <img [src]="item.url" />
     <ion-card-header>
@@ -10,4 +10,13 @@
     </ion-card-header>
   </ion-card> -->
   Dashboard
+  <ion-item>
+    <ion-label>Hair Color</ion-label>
+    <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+      <ion-select-option value="brown">Brown</ion-select-option>
+      <ion-select-option value="blonde">Blonde</ion-select-option>
+      <ion-select-option value="black">Black</ion-select-option>
+      <ion-select-option value="red">Red</ion-select-option>
+    </ion-select>
+  </ion-item>
 </ion-content>

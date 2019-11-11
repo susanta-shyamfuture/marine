@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { HeaderComponent, LoaderComponent } from '../../container/components';
+import { HeaderComponent, LoaderComponent, BackdropComponent } from '../../container/components';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -11,7 +11,8 @@ import { IonicModule } from '@ionic/angular';
   declarations: [
     // Components
     HeaderComponent,
-    LoaderComponent
+    LoaderComponent,
+    BackdropComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +28,8 @@ import { IonicModule } from '@ionic/angular';
     IonicModule,
     // Components
     HeaderComponent,
-    LoaderComponent
+    LoaderComponent,
+    BackdropComponent
   ]
 })
 export class SharedModule { }

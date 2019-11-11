@@ -27,13 +27,11 @@ export class LoaderComponent implements OnInit, OnDestroy {
     });
     // this.presentLoadingWithOptions();
   }
-  ionViewWillEnter() {}
-  ionViewDidLeave() {
+  ngOnDestroy() {
     // UnSubscribe Subscriptions
     this.onDestroyUnSubscribe.next();
     this.onDestroyUnSubscribe.complete();
   }
-  ngOnDestroy() {}
 
   async presentLoading() {
     const loading = await this.loadingController.create({
