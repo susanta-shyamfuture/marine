@@ -10,12 +10,11 @@ export class BackdropService {
   backdropState = this.backdropSubject.asObservable();
 
   constructor() { }
+
   show(styles?) {
-    console.log('show BD');
     this.backdropSubject.next({ show: true, styles } as Backdrop);
   }
   hide() {
-    console.log('hide BD');
     this.backdropSubject.next({ show: false } as Backdrop);
   }
 }

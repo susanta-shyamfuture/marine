@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { MessageService } from './message.service';
+import { ToastService } from './toast.service';
 /** Type of the handleError function returned by HttpErrorHandler.createHandleError */
 export type HandleError = <T> (operation?: string, result?: T) => (error: HttpErrorResponse) => Observable<T>;
 
@@ -13,12 +14,13 @@ export type HandleError = <T> (operation?: string, result?: T) => (error: HttpEr
 export class HandleErrorService {
 
   constructor(
-    private messageService: MessageService
+    private messageService: MessageService,
+    private toastService: ToastService
   ) { }
 
   /** Create curried handleError function that already knows the service name */
   createHandleError = (serviceName = '') => <T>
-    (operation = 'operation', result = {} as T) => this.handleError(serviceName, operation, result);
+    (operation = 'operation', result = {} as T) => this.handleError(serviceName, operation, result)
 
   /**
    * Returns a function that handles Http operation failures.
@@ -31,7 +33,7 @@ export class HandleErrorService {
 
     return (error: HttpErrorResponse): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.log(error.message); // log to console instead
+      console.log(error); // log to console instead
 
       const message = (error.error instanceof ErrorEvent) ?
         error.message :
@@ -40,7 +42,15 @@ export class HandleErrorService {
       // TODO: better job of transforming error for user consumption
       this.messageService.add(`${serviceName}: ${operation} failed: ${message}`);
 
-      console.log(error.statusText);
+      this.toastService.createToast({
+        header: error.statusText,
+        message,
+        color: 'danger',
+        showCloseButton: true,
+        duration: 5000
+      }).then(toast => {
+        toast.present();
+      });
       // Let the app keep running by returning a safe result.
       return of( result );
     };

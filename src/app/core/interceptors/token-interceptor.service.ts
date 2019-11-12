@@ -36,20 +36,21 @@ export class TokenInterceptorService {
     // } else {
     //   reqModified.body['environment'] = environment.devEnv;
     // }
-    return next.handle(reqModified).pipe(
+    return next.handle(reqModified)
+    .pipe(
       map((event: HttpEvent<any>) => {
-          if (event instanceof HttpResponse) {
-            // Check Auth token if it is Valid else logout
-            // if (!event.body.serverResponse.isSuccess && event.body.serverResponse.code === 601) {
-            //   this.authService.logOut();
-            // }
-          }
-          return event;
+        if (event instanceof HttpResponse) {
+          // Check Auth token if it is Valid else logout
+          // if (!event.body.serverResponse.isSuccess && event.body.serverResponse.code === 601) {
+          //   this.authService.logOut();
+          // }
+        }
+        return event;
       }),
-      catchError((error: any) => {
-        console.log(error);
-        return throwError(error);
-      })
+      // catchError((error: any) => {
+      //   console.log(error);
+      //   return throwError(error);
+      // })
     );
   }
 }

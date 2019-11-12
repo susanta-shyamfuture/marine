@@ -8,11 +8,12 @@ import {
   CheckNetworkComponent,
   BackdropComponent
 } from '../../container/components';
+import { Network } from '@ionic-native/network/ngx';
 
 @NgModule({
   declarations: [
     CheckNetworkComponent,
-    // BackdropComponent
+    BackdropComponent
   ],
   imports: [
     CommonModule,
@@ -27,9 +28,10 @@ import {
     ReactiveFormsModule,
     // Components
     CheckNetworkComponent,
-    // BackdropComponent
+    BackdropComponent
   ],
   providers: [
+    Network
   ]
 })
 export class CoreModule { }

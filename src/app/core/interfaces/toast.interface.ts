@@ -11,7 +11,7 @@ export interface Toast {
   header?: string | undefined;
   keyboardClose?: boolean;
   leaveAnimation?: ((Animation: Animation, baseEl: any, opts?: any) => Promise<Animation>) | undefined;
-  message?: string | undefined;
+  message: string | undefined;
   mode?: 'ios' | 'md';
   position?: 'bottom' | 'middle' | 'top';
   showCloseButton?: boolean;

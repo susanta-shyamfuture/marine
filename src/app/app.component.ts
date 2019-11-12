@@ -12,7 +12,7 @@ import { AlertController } from '@ionic/angular';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 // Services
-import { AuthService } from './core/services';
+import { AuthService, CheckNetworkService } from './core/services';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -133,6 +133,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     public alertController: AlertController,
     public authService: AuthService,
+    private checkNetworkService: CheckNetworkService
   ) {
     this.initializeApp();
     router.events.subscribe(val => {
@@ -163,14 +164,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  // closeAllCollapsibles(item) {
-  //   if (condition) {
-  //     item['state'] = 'close';
-  //   } else {
-  //     item['state'] = 'close';
-  //   }
-  // }
-
   ionViewDidLeave() {
     // UnSubscribe Subscriptions
     this.onDestroyUnSubscribe.next();
@@ -186,6 +179,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         this.setStatusBarStyle();
       });
       this.splashScreen.hide();
+      this.checkNetworkService.onConnect();
+      this.checkNetworkService.onDisconnect();
     });
   }
   private setStatusBarStyle() {

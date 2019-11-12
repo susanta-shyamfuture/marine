@@ -2,49 +2,62 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpEventType } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LoaderService } from '../services';
-
+import { LoaderService, BackdropService } from '../services';
 @Injectable({
   providedIn: 'root'
 })
 export class LoaderInterceptorService {
-  constructor(private loaderService: LoaderService) { }
+  constructor(private loaderService: LoaderService, private backdropService: BackdropService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.showLoader(5);
+    // const reqModified = req.clone({
+    //   reportProgress: true
+    // });
+    // console.log(reqModified);
+    this.showLoader(0.05);
     return next.handle(req)
     .pipe(
       tap(
         (event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.Sent:
-              console.log('s');
+              console.log('-------Sent-------', event);
               break;
             case HttpEventType.UploadProgress:
-              const percentDone = Math.round(100 * event.loaded / event.total / 100);
-              console.log('p');
-              this.showLoader(percentDone);
+              console.log('-------UploadProgress-------', event);
+              const percentDone = (100 * event.loaded / event.total) / 100;
+              this.showLoader(+percentDone.toFixed(2));
+              break;
+            case HttpEventType.ResponseHeader:
+              console.log('-------ResponseHeader-------', event);
+              break;
+            case HttpEventType.DownloadProgress:
+              console.log('-------DownloadProgress-------', event);
+              const percentSDone = (100 * event.loaded / event.total) / 100;
+              this.showLoader(+percentSDone.toFixed(2));
               break;
             case HttpEventType.Response:
-              console.log('e');
-              this.onEnd();
+              console.log('-------Response-------', event);
+              this.hideLoader();
+              break;
+            case HttpEventType.User:
+              console.log('-------User-------', event);
               break;
             default:
-              // console.log('Error Happened');
+              console.log('Started');
           }
         },
         (err: any) => {
-          this.onEnd();
+          this.hideLoader();
         }
       )
     );
   }
-  private onEnd(): void {
-    this.hideLoader();
-  }
   private showLoader(percentage): void {
+    this.backdropService.show();
     this.loaderService.show(percentage);
   }
   private hideLoader(): void {
+    this.backdropService.hide();
     this.loaderService.hide();
   }
 }

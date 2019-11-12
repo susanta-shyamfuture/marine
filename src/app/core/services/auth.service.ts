@@ -11,11 +11,20 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 
 // Content Type
+const login = 'admin';
+const password = '12345';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
-  })
+  }).set('x-api-key', 'Shyam@12345').set('Authorization', `Basic ${btoa(login + ':' + password)}`)
 };
+// const httpOption = {
+//   headers: new HttpHeaders({
+//     'x-api-key': 'Shyam@12345',
+//     'Content-Type':  'application/json',
+//     Authorization: `Basic ${btoa(login + ':' + password)}`
+//   })
+// };
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +41,13 @@ export class AuthService {
   }
   // get data
   getData() {
-    return this.http.get('https://jsonplaceholder.typicode.com/photos', httpOptions)
+    const data = {
+      product_id: '', user_id: '201', device_token: '', pro_search: ''
+    };
+    return this.http.post(
+      'http://thedukanwala.com/grocery/api/discountproductslist/50/1', data,
+      httpOptions
+    )
     .pipe(
         map(response => response),
         catchError(this.handleError('getData'))

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LoaderService } from '../../../core/services';
 import { LoaderState } from '../../../core/interfaces';
 // RxJs
@@ -16,7 +16,11 @@ export class LoaderComponent implements OnInit, OnDestroy {
   public percentage = 0;
   private onDestroyUnSubscribe = new Subject<void>();
 
-  constructor(private loaderService: LoaderService, public loadingController: LoadingController) { }
+  constructor(
+    private loaderService: LoaderService,
+    public loadingController: LoadingController,
+    private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.loaderService.loaderState
@@ -24,6 +28,7 @@ export class LoaderComponent implements OnInit, OnDestroy {
     .subscribe((state: LoaderState) => {
       this.show = state.show;
       this.percentage = state.percentage;
+      this.cd.detectChanges();
     });
     // this.presentLoadingWithOptions();
   }

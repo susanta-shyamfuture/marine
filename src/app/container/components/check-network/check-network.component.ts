@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
 // RxJs
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IonBackdrop } from '@ionic/angular';
-import { BackdropService } from '../../../core/services';
+import { BackdropService, CheckNetworkService } from '../../../core/services';
+import { CheckNetwork } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-check-network',
@@ -16,35 +16,52 @@ export class CheckNetworkComponent implements OnInit, OnDestroy {
   @ViewChild('isOffline', { static: true }) public offlineElem: ElementRef;
   private onDestroyUnSubscribe = new Subject<void>();
   public networkType: any;
-  constructor(private network: Network, private backdropService: BackdropService) { }
+  constructor(
+    private network: Network,
+    private backdropService: BackdropService,
+    private checkNetworkService: CheckNetworkService,
+    private cd: ChangeDetectorRef
+  ) {
+    this.checkNetworkService.checkNetworkState
+    .pipe(takeUntil(this.onDestroyUnSubscribe))
+    .subscribe((state: CheckNetwork) => {
+      if (state.isConnected) {
+        this.showOnline();
+      } else {
+        this.showOffline();
+      }
+      this.cd.detectChanges();
+    });
+    // // watch network for a disconnection
+    // this.network.onDisconnect()
+    // .pipe(takeUntil(this.onDestroyUnSubscribe))
+    // .subscribe(networkData => {
+    //   console.log('network disconnected!', this.network);
+    //   this.networkType = this.network;
+    //   this.showOffline();
+    //   this.cd.detectChanges();
+    //   // console.log('network was disconnected :-(', networkData);
+    // });
+
+
+    // // watch network for a connection
+    // this.network.onConnect()
+    // .pipe(takeUntil(this.onDestroyUnSubscribe))
+    // .subscribe(networkData => {
+    //   this.networkType = this.network;
+    //   this.showOnline();
+    //   this.cd.detectChanges();
+    //   console.log('network connected!', this.network);
+    //   setTimeout(() => {
+    //     if (this.network.type === 'wifi') {
+    //       console.log('we got a wifi connection, woohoo!');
+    //     }
+    //     this.cd.detectChanges();
+    //   }, 3000);
+    // });
+  }
 
   ngOnInit() {
-    console.log(this.network);
-    // watch network for a disconnection
-    this.network.onDisconnect()
-    .pipe(takeUntil(this.onDestroyUnSubscribe))
-    .subscribe(networkData => {
-      console.log('network status =>', networkData);
-      this.networkType = this.network;
-      this.showOffline();
-      console.log('network was disconnected :-(', networkData);
-    });
-
-
-    // watch network for a connection
-    this.network.onConnect()
-    .pipe(takeUntil(this.onDestroyUnSubscribe))
-    .subscribe(networkData => {
-      console.log('network status =>', networkData);
-      console.log('network connected!', networkData);
-      this.networkType = this.network;
-      this.showOnline();
-      setTimeout(() => {
-        if (this.network.type === 'wifi') {
-          console.log('we got a wifi connection, woohoo!');
-        }
-      }, 3000);
-    });
   }
   ngOnDestroy() {
     // UnSubscribe Subscriptions
@@ -57,7 +74,7 @@ export class CheckNetworkComponent implements OnInit, OnDestroy {
     this.onlineElem.nativeElement.classList.add('show');
     setTimeout(() => {
       this.onlineElem.nativeElement.classList.remove('show');
-    }, 2000);
+    }, 5000);
   }
   showOffline() {
     this.backdropService.show();

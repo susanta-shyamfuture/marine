@@ -20,7 +20,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   ngOnInit() {
   }
   ionViewWillEnter() {
-    this.getAllData();
+    // this.getAllData();
   }
   ionViewDidLeave() {
     // UnSubscribe Subscriptions
@@ -28,6 +28,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.onDestroyUnSubscribe.complete();
   }
   ngOnDestroy() { }
+  
   getAllData() {
     this.authService.getData()
     .pipe(takeUntil(this.onDestroyUnSubscribe))
@@ -35,9 +36,6 @@ export class DashboardPage implements OnInit, OnDestroy {
       result => {
         console.log('After Login', result);
         this.datas = result;
-      },
-      error => {
-        console.log('Error');
       }
     );
   }

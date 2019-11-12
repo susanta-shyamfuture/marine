@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { IonRouterOutlet } from '@ionic/angular';
@@ -12,7 +12,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public ionRouterOutlet: IonRouterOutlet
+    public ionRouterOutlet: IonRouterOutlet,
+    private cd: ChangeDetectorRef
   ) {
     router.events.subscribe(changeEvent => {
       if (changeEvent instanceof NavigationEnd) {
