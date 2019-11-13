@@ -33,6 +33,15 @@ export class CheckNetworkService {
     });
   }
 
+  onChange() {
+    // watch network for a connection
+    return this.network.onChange()
+    // .subscribe(() => {
+    .subscribe(net => {
+      console.log(net);
+    });
+  }
+
   isOnline() {
     this.checkNetworkSubject.next({ showOnline: true, showOffline: false, isConnected: true, networkData: this.network } as CheckNetwork);
   }

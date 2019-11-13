@@ -29,7 +29,7 @@ export class TokenInterceptorService {
       // headers : req.headers.append(
       //   'ACCESSTOKEN', `${this.authService.getToken()}`
       // ),
-      reportProgress: true
+      // reportProgress: true
     });
     // if (reqModified.body instanceof FormData) {
     //   reqModified.body.append('environment', environment.devEnv);

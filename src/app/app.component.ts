@@ -12,7 +12,7 @@ import { AlertController } from '@ionic/angular';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 // Services
-import { AuthService, CheckNetworkService } from './core/services';
+import { AuthService, CheckNetworkService, ToastService } from './core/services';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -133,7 +133,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     public alertController: AlertController,
     public authService: AuthService,
-    private checkNetworkService: CheckNetworkService
+    private checkNetworkService: CheckNetworkService,
+    private toastService: ToastService
   ) {
     this.initializeApp();
     router.events.subscribe(val => {
@@ -170,7 +171,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.onDestroyUnSubscribe.complete();
     this.backSubscription.unsubscribe();
   }
-  ngOnDestroy() { }
+  ngOnDestroy() {
+    // UnSubscribe Subscriptions
+    this.onDestroyUnSubscribe.next();
+    this.onDestroyUnSubscribe.complete();
+    this.backSubscription.unsubscribe();
+  }
 
   initializeApp() {
     this.platform.ready().then(() => {

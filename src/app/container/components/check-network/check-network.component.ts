@@ -16,6 +16,7 @@ export class CheckNetworkComponent implements OnInit, OnDestroy {
   @ViewChild('isOffline', { static: true }) public offlineElem: ElementRef;
   private onDestroyUnSubscribe = new Subject<void>();
   public networkType: any;
+  public networkConnected: boolean = true;
   constructor(
     private network: Network,
     private backdropService: BackdropService,
@@ -25,9 +26,15 @@ export class CheckNetworkComponent implements OnInit, OnDestroy {
     this.checkNetworkService.checkNetworkState
     .pipe(takeUntil(this.onDestroyUnSubscribe))
     .subscribe((state: CheckNetwork) => {
-      if (state.isConnected) {
-        this.showOnline();
+      if (state.isConnected && !this.networkConnected) {
+        this.networkConnected = state.isConnected;
+        if (this.networkConnected) {
+          this.showOnline();
+        }
+      } else if (state.isConnected && this.networkConnected) {
+        console.log('Screen Unlocked');
       } else {
+        this.networkConnected = state.isConnected;
         this.showOffline();
       }
       this.cd.detectChanges();
