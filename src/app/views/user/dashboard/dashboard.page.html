@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" color="maritime">
   <!-- <ion-card *ngFor="let item of datas">
     <img [src]="item.url" />
     <ion-card-header>
@@ -10,14 +10,19 @@
     </ion-card-header>
   </ion-card> -->
   Dashboard
-  <ion-item>
-    <ion-label>Hair Color</ion-label>
-    <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+  <ion-item color="maritime">
+    <ion-label class="small-label" position="floating">Hair Color</ion-label>
+    <ion-select value="" okText="Okay" cancelText="Dismiss">
       <ion-select-option value="brown">Brown</ion-select-option>
       <ion-select-option value="blonde">Blonde</ion-select-option>
       <ion-select-option value="black">Black</ion-select-option>
       <ion-select-option value="red">Red</ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-button (click)="getAllData()">Call API</ion-button>
+  <ion-item color="maritime" lines="full" class="no-highlight">
+    <ion-label class="small-label" position="floating" color="secondary">Username</ion-label>
+    <ion-input name="username" type="text" spellcheck="false">
+    </ion-input>
+  </ion-item>
+  <ion-button color="google" shape="round" (click)="getAllData()">Call API</ion-button>
 </ion-content>

@@ -1,41 +1,45 @@
-<app-header></app-header>
-
-<ion-content>
-
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
-    <ion-list>
-      <ion-item>
-        <ion-label position="stacked" color="primary">Username</ion-label>
-        <ion-input name="username" type="text" spellcheck="false" autocapitalize="off"
-        formControlName="email">
-        </ion-input>
-      </ion-item>
-
-      <!-- Error Messages -->
-      <ion-text color="danger" *ngIf="errorState(loginForm, 'email', 'email').message">
-        <p class="help-block ion-padding-start" [innerHTML]="errorState(loginForm, 'email', 'email').message"></p>
-      </ion-text>
-
-      <ion-item>
-        <ion-label position="stacked" color="primary">Password</ion-label>
-        <ion-input name="password" type="password" formControlName="password">
-        </ion-input>
-      </ion-item>
-
-      <!-- Error Messages -->
-      <ion-text color="danger" *ngIf="errorState(loginForm, 'password', 'password').message">
-        <p class="help-block ion-padding-start" [innerHTML]="errorState(loginForm, 'password', 'password').message"></p>
-      </ion-text>
-    </ion-list>
-
-    <ion-row>
-      <ion-col>
-        <ion-button [routerLink]="['/register']" color="light" expand="block">Signup</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button type="submit" expand="block">Login</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
-
+<ion-content color="maritime" fullscreen="true">
+  <!-- <div class="page-inner-content"> -->
+    <div class="horizontal-lines ion-padding-top"></div>
+    <ion-grid class="ion-no-padding">
+      <ion-row class="full-height-inner ion-align-items-center ion-justify-content-center">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+          <!-- <ion-list class="ion-no-padding"> -->
+            <ion-item color="maritime">
+              <ion-label class="small-label" position="floating" color="secondary">Username</ion-label>
+              <ion-input name="username" type="text" spellcheck="false" autocapitalize="off"
+              formControlName="email">
+              </ion-input>
+            </ion-item>
+      
+            <!-- Error Messages -->
+            <ion-text color="danger" *ngIf="errorState(loginForm, 'email', 'email').message">
+              <p class="help-block ion-padding-start" [innerHTML]="errorState(loginForm, 'email', 'email').message"></p>
+            </ion-text>
+      
+            <ion-item color="maritime">
+              <ion-label class="small-label" position="floating" color="secondary">Password</ion-label>
+              <ion-input name="password" type="password" formControlName="password">
+              </ion-input>
+            </ion-item>
+      
+            <!-- Error Messages -->
+            <ion-text color="danger" *ngIf="errorState(loginForm, 'password', 'password').message">
+              <p class="help-block ion-padding-start" [innerHTML]="errorState(loginForm, 'password', 'password').message"></p>
+            </ion-text>
+          <!-- </ion-list> -->
+      
+          <ion-row>
+            <ion-col>
+              <ion-button [routerLink]="['/register']" color="light" expand="block">Signup</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button type="submit" expand="block">Login</ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-row>
+    </ion-grid>
+    <div class="horizontal-lines ion-padding-bottom"></div>
+  <!-- </div> -->
 </ion-content>
